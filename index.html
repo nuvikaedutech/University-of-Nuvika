@@ -331,6 +331,133 @@
           </div>
         </div>
 
+<!-- MÓDULO DE LOGIN & PROGRESO DEL TUTOR -->
+<section id="tutor-portal" class="max-w-4xl mx-auto my-12 p-6 bg-white rounded-2xl shadow-xl border border-slate-200">
+  <div class="text-center mb-6">
+    <span class="text-xs uppercase tracking-widest text-blue-600 font-bold">Portal del Tutor</span>
+    <h2 class="text-2xl font-black text-slate-800">Consulta tu Progreso y Resultados</h2>
+    <p class="text-sm text-slate-500">Ingresa tu Nombre Completo o tu Usuario de Telegram para sincronizar con tu ficha</p>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+    <input type="text" id="tutorQuery" placeholder="Ej: Jose Felipe Cortes o @josecortes" 
+           class="px-4 py-2 border border-slate-300 rounded-lg text-sm w-full sm:w-80 focus:ring-2 focus:ring-blue-500 outline-none">
+    <button onclick="buscarProgresoTutor()" 
+            class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md">
+      Consultar Avance
+    </button>
+  </div>
+
+  <div id="loadingStatus" class="hidden text-center text-sm text-blue-600 font-medium py-4">Buscando datos en la base de Nuvika...</div>
+  <div id="errorStatus" class="hidden text-center text-sm text-rose-600 font-medium py-4"></div>
+
+  <!-- TARJETA DE PROGRESO INDIVIDUAL -->
+  <div id="tutorCard" class="hidden border border-slate-200 rounded-xl p-6 bg-slate-50">
+    <div class="flex flex-wrap justify-between items-center border-b border-slate-200 pb-4 mb-4">
+      <div>
+        <h3 id="resNombre" class="text-xl font-bold text-slate-800"></h3>
+        <p class="text-xs text-slate-500">Materia: <span id="resCurso" class="font-bold text-slate-700"></span> | Entrenador: <span id="resEntrenador" class="font-bold text-slate-700"></span></p>
+      </div>
+      <div id="badgeResultado" class="px-4 py-1.5 rounded-full text-xs font-black uppercase"></div>
+    </div>
+
+    <!-- Barra de Hitos -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center mb-6">
+      <div id="stepWebinar" class="p-3 bg-white rounded-lg border shadow-sm">
+        <p class="text-xs text-slate-400">Paso 1</p>
+        <p class="text-xs font-bold text-slate-700">Webinar Políticas</p>
+        <span class="text-lg" id="iconWebinar">⏳</span>
+      </div>
+      <div id="stepVideo" class="p-3 bg-white rounded-lg border shadow-sm">
+        <p class="text-xs text-slate-400">Paso 2</p>
+        <p class="text-xs font-bold text-slate-700">Video Clase</p>
+        <span class="text-lg" id="iconVideo">⏳</span>
+      </div>
+      <div id="stepPretest" class="p-3 bg-white rounded-lg border shadow-sm">
+        <p class="text-xs text-slate-400">Paso 3</p>
+        <p class="text-xs font-bold text-slate-700">Pre-Test Roleplay</p>
+        <span class="text-lg" id="iconPretest">⏳</span>
+      </div>
+      <div id="stepExamen" class="p-3 bg-white rounded-lg border shadow-sm">
+        <p class="text-xs text-slate-400">Paso 4</p>
+        <p class="text-xs font-bold text-slate-700">Test Final</p>
+        <span class="text-lg" id="iconExamen">⏳</span>
+      </div>
+    </div>
+
+    <!-- Comentarios y Feedback -->
+    <div class="bg-white p-4 rounded-lg border border-slate-200">
+      <p class="text-xs font-bold text-slate-500 uppercase tracking-wide">Observaciones / Feedback de tu Entrenador:</p>
+      <p id="resFeedback" class="text-sm text-slate-700 mt-1 italic">Sin observaciones registradas por el momento.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+// REEMPLAZA ESTA URL CON LA QUE TE DIO APPS SCRIPT AL IMPLEMENTAR
+const APPS_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT_QUE_TERMINA_EN_EXEC";
+
+async function buscarProgresoTutor() {
+  const query = document.getElementById("tutorQuery").value.trim();
+  const loading = document.getElementById("loadingStatus");
+  const error = document.getElementById("errorStatus");
+  const card = document.getElementById("tutorCard");
+
+  if (!query) {
+    error.textContent = "Por favor ingresa tu nombre o usuario de Telegram.";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  loading.classList.remove("hidden");
+  error.classList.add("hidden");
+  card.classList.add("hidden");
+
+  try {
+    const res = await fetch(`${APPS_SCRIPT_URL}?query=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    loading.classList.add("hidden");
+
+    if (!data.found || data.data.length === 0) {
+      error.textContent = "No encontramos ningún registro con ese nombre/usuario. Revisa la ortografía o consulta con tu reclutador.";
+      error.classList.remove("hidden");
+      return;
+    }
+
+    const tutor = data.data[0];
+    document.getElementById("resNombre").textContent = tutor.nombre;
+    document.getElementById("resCurso").textContent = tutor.curso;
+    document.getElementById("resEntrenador").textContent = tutor.entrenador;
+    document.getElementById("resFeedback").textContent = tutor.comentarios || "Aún no se ha registrado feedback escrito.";
+
+    // Renderizar iconos
+    document.getElementById("iconWebinar").textContent = tutor.webinar ? "✅" : "⏳";
+    document.getElementById("iconVideo").textContent = tutor.video ? "✅" : "⏳";
+    document.getElementById("iconPretest").textContent = tutor.pretest ? "✅" : "⏳";
+    
+    // Estado Examen
+    const badge = document.getElementById("badgeResultado");
+    badge.textContent = tutor.resultadoExamen;
+    if (tutor.resultadoExamen.toLowerCase().indexOf("pass") !== -1 || tutor.resultadoExamen.toLowerCase().indexOf("aprob") !== -1) {
+      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-emerald-100 text-emerald-800 border border-emerald-300";
+      document.getElementById("iconExamen").textContent = "✅";
+    } else if (tutor.resultadoExamen.toLowerCase().indexOf("fail") !== -1 || tutor.resultadoExamen.toLowerCase().indexOf("reprob") !== -1) {
+      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-rose-100 text-rose-800 border border-rose-300";
+      document.getElementById("iconExamen").textContent = "❌";
+    } else {
+      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-amber-100 text-amber-800 border border-amber-300";
+      document.getElementById("iconExamen").textContent = "⏳";
+    }
+
+    card.classList.remove("hidden");
+  } catch (err) {
+    loading.classList.add("hidden");
+    error.textContent = "Error al conectar con la base de datos de Google Sheets. Intenta nuevamente.";
+    error.classList.remove("hidden");
+  }
+}
+</script>
+        
         <!-- 3 Quick Access Action Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Card 1 -->
