@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nuvika University | Portal de Entrenamiento y Práctica</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Phosphor Icons CDN -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -24,17 +21,9 @@
           },
           colors: {
             nuvika: {
-              900: '#0c1b33',
-              850: '#112545',
-              800: '#1b365d',
-              700: '#23497d',
-              600: '#2b5ea0',
-              500: '#3878c4',
-              accent: '#06b6d4',
-              neon: '#00e5ff',
-              emerald: '#10b981',
-              amber: '#f59e0b',
-              rose: '#f43f5e'
+              900: '#0c1b33', 850: '#112545', 800: '#1b365d', 700: '#23497d',
+              600: '#2b5ea0', 500: '#3878c4', accent: '#06b6d4', neon: '#00e5ff',
+              emerald: '#10b981', amber: '#f59e0b', rose: '#f43f5e'
             }
           }
         }
@@ -43,33 +32,91 @@
   </script>
 
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0c1b33;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #23497d;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #3878c4;
-    }
-    .chat-bubble-tutor {
-      border-bottom-right-radius: 4px;
-    }
-    .chat-bubble-student {
-      border-bottom-left-radius: 4px;
-    }
-    .pulse-glow {
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0c1b33; }
+    ::-webkit-scrollbar-thumb { background: #23497d; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3878c4; }
+    .chat-bubble-tutor { border-bottom-right-radius: 4px; }
+    .chat-bubble-student { border-bottom-left-radius: 4px; }
+    .pulse-glow { box-shadow: 0 0 20px rgba(6, 182, 212, 0.35); }
+    .fade-in { animation: fadeIn .35s ease-out both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .shake { animation: shake .4s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
   </style>
 </head>
-<body class="bg-[#081220] text-slate-100 font-sans min-h-screen flex flex-col md:flex-row antialiased selection:bg-nuvika-accent selection:text-nuvika-900">
+<body class="bg-[#081220] text-slate-100 font-sans min-h-screen antialiased selection:bg-nuvika-accent selection:text-nuvika-900">
+
+  <!-- ============================================== -->
+  <!-- PANTALLA DE ACCESO (LOGIN)                     -->
+  <!-- ============================================== -->
+  <div id="loginScreen" class="fixed inset-0 z-[60] overflow-y-auto bg-[radial-gradient(ellipse_at_top,_#1b365d_0%,_#081220_60%)] flex items-center justify-center p-4">
+    <div class="absolute inset-0 pointer-events-none opacity-[0.07] flex items-end justify-end overflow-hidden">
+      <i class="ph ph-code text-[420px] text-cyan-400 -mb-24 -mr-16"></i>
+    </div>
+
+    <div id="loginCard" class="relative w-full max-w-md rounded-3xl bg-nuvika-900/90 backdrop-blur-xl border border-slate-700/70 shadow-2xl shadow-cyan-500/10 p-7 sm:p-8 fade-in">
+      <div class="flex items-center gap-3.5 mb-7">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30 ring-1 ring-cyan-400/30">
+          <i class="ph-bold ph-graduation-cap text-2xl"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-xl tracking-tight text-white">Nuvika<span class="text-cyan-400 font-black">Univ</span></span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">LATAM</span>
+          </div>
+          <p class="text-xs text-slate-400 font-medium">Portal del Tutor · Pipeline & Practice Academy</p>
+        </div>
+      </div>
+
+      <h1 class="text-2xl font-extrabold text-white tracking-tight">Ingresa a tu portal</h1>
+      <p class="text-sm text-slate-400 mt-1.5 leading-relaxed">Escribe tu <strong class="text-slate-200">nombre completo</strong> o tu <strong class="text-slate-200">usuario de Telegram</strong> tal como lo registraste en el proceso.</p>
+
+      <form id="loginForm" class="mt-6 space-y-4" novalidate>
+        <div>
+          <label for="loginQuery" class="text-xs font-semibold text-slate-300">Nombre o usuario de Telegram</label>
+          <div class="mt-1.5 relative">
+            <i class="ph ph-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
+            <input id="loginQuery" type="text" autocomplete="username" placeholder="Ej: Jose Felipe Cortes o @jose67"
+              class="w-full bg-nuvika-850 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition">
+          </div>
+        </div>
+
+        <div id="codeField" class="hidden fade-in">
+          <label for="loginCode" class="text-xs font-semibold text-slate-300">Código de acceso</label>
+          <div class="mt-1.5 relative">
+            <i class="ph ph-lock-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
+            <input id="loginCode" type="password" inputmode="numeric" autocomplete="one-time-code" placeholder="El código que te dio tu reclutador"
+              class="w-full bg-nuvika-850 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition">
+          </div>
+          <p class="text-[11px] text-slate-500 mt-1.5">Tu ficha está protegida con un código. Pídelo en el grupo de Telegram si no lo tienes.</p>
+        </div>
+
+        <div id="loginError" class="hidden text-xs text-rose-300 bg-rose-500/10 border border-rose-500/30 rounded-xl px-3.5 py-2.5 flex items-start gap-2">
+          <i class="ph-bold ph-warning-circle text-base shrink-0 mt-px"></i><span id="loginErrorText"></span>
+        </div>
+
+        <button id="loginBtn" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold shadow-md shadow-cyan-500/25 flex items-center justify-center gap-2 transition disabled:opacity-60 disabled:cursor-wait">
+          <span id="loginBtnText">Entrar al portal</span>
+          <i id="loginBtnIcon" class="ph-bold ph-arrow-right"></i>
+        </button>
+      </form>
+
+      <div id="demoNotice" class="hidden mt-5 text-[11px] text-amber-200 bg-amber-500/10 border border-amber-500/30 rounded-xl px-3.5 py-2.5">
+        <strong class="text-amber-300">Modo demo:</strong> aún no has pegado la URL de Apps Script, así que se usan datos de ejemplo. Prueba con <code class="font-mono text-amber-100">@laurademo</code>, <code class="font-mono text-amber-100">Sara Demo Gómez</code>, <code class="font-mono text-amber-100">@mariodemo</code> o <code class="font-mono text-amber-100">@andresdemo</code> (código 4821).
+      </div>
+
+      <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+        <a href="https://t.me/nuvika_support" target="_blank" rel="noopener" class="text-sky-400 hover:underline flex items-center gap-1"><i class="ph ph-paper-plane-tilt"></i> ¿No te encuentras? Escríbenos</a>
+        <span>&copy; 2026 Nuvika Education</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- APLICACIÓN (visible solo tras ingresar)        -->
+  <!-- ============================================== -->
+  <div id="appShell" class="hidden min-h-screen flex flex-col md:flex-row">
 
   <!-- Mobile Header Bar -->
   <div class="md:hidden flex items-center justify-between p-4 bg-nuvika-900 border-b border-nuvika-700/50 sticky top-0 z-50">
@@ -82,14 +129,13 @@
         <span class="block text-[10px] text-cyan-300 font-medium -mt-1 tracking-wider uppercase">Tutor Hub</span>
       </div>
     </div>
-    <button id="mobileMenuBtn" class="p-2 text-slate-300 hover:text-white rounded-lg bg-nuvika-800">
+    <button id="mobileMenuBtn" aria-label="Abrir menú" class="p-2 text-slate-300 hover:text-white rounded-lg bg-nuvika-800">
       <i class="ph ph-list text-2xl"></i>
     </button>
   </div>
 
   <!-- Sidebar Navigation -->
-  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-72 bg-nuvika-900/95 backdrop-blur-xl border-r border-slate-800/80 flex flex-col z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
-    <!-- Brand -->
+  <aside id="sidebar" class="fixed md:sticky md:top-0 md:h-screen inset-y-0 left-0 w-72 bg-nuvika-900/95 backdrop-blur-xl border-r border-slate-800/80 flex flex-col z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shrink-0">
     <div class="p-5 border-b border-slate-800/60 hidden md:flex items-center gap-3.5">
       <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-md shadow-cyan-500/20 ring-1 ring-cyan-400/30">
         <i class="ph-bold ph-graduation-cap text-2xl"></i>
@@ -103,95 +149,78 @@
       </div>
     </div>
 
-    <!-- Tutor Badge Card -->
+    <!-- Tutor Badge Card (dinámica) -->
     <div class="mx-4 mt-4 p-3.5 rounded-xl bg-gradient-to-br from-nuvika-850 to-nuvika-800/70 border border-slate-700/60 shadow-sm">
-      <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center justify-between mb-2 gap-2">
         <span class="text-[11px] font-semibold uppercase tracking-wider text-cyan-300">Tutor en Práctica</span>
-        <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Fase Pre-Test
+        <span id="sidebarPhaseBadge" class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span id="sidebarPhase">—</span>
         </span>
       </div>
-      <div class="text-sm font-bold text-white" id="sidebarTutorName">Christian Camilo O.</div>
-      <div class="text-xs text-slate-400 flex items-center justify-between mt-1">
-        <span>Especialidad: <strong class="text-slate-200" id="sidebarTutorTrack">Scratch & Roblox</strong></span>
-        <span class="text-cyan-400 font-mono text-[11px]">Cohorte Caro</span>
+      <div class="text-sm font-bold text-white truncate" id="sidebarTutorName">—</div>
+      <div class="text-xs text-slate-400 flex items-center justify-between mt-1 gap-2">
+        <span class="truncate">Especialidad: <strong class="text-slate-200" id="sidebarTutorTrack">—</strong></span>
+        <span class="text-cyan-400 font-mono text-[11px] whitespace-nowrap" id="sidebarCohort">—</span>
+      </div>
+      <div class="mt-3 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+        <div id="sidebarProgressBar" class="bg-gradient-to-r from-cyan-400 to-emerald-400 h-full rounded-full transition-all duration-700" style="width:0%"></div>
       </div>
     </div>
 
-    <!-- Navigation Menu Items -->
     <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-cyan-400 bg-cyan-500/10 border border-cyan-500/30">
-        <i class="ph-bold ph-squares-four text-lg"></i>
-        <span>Mi Ruta de Certificación</span>
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-squares-four text-lg"></i><span>Mi Ruta de Certificación</span>
       </button>
-
-      <button onclick="switchTab('simulator')" id="nav-simulator" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-slate-300 hover:text-white hover:bg-nuvika-800/60">
-        <i class="ph-bold ph-chats-circle text-lg text-emerald-400"></i>
-        <span>Roleplay Lab (Pre-Test)</span>
+      <button onclick="switchTab('simulator')" id="nav-simulator" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-chats-circle text-lg text-emerald-400"></i><span>Roleplay Lab (Pre-Test)</span>
         <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Simulador</span>
       </button>
-
-      <button onclick="switchTab('rubric')" id="nav-rubric" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-slate-300 hover:text-white hover:bg-nuvika-800/60">
-        <i class="ph-bold ph-scales text-lg text-amber-400"></i>
-        <span>Rúbrica de Evaluación</span>
+      <button onclick="switchTab('rubric')" id="nav-rubric" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-scales text-lg text-amber-400"></i><span>Rúbrica de Evaluación</span>
       </button>
-
-      <button onclick="switchTab('library')" id="nav-library" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-slate-300 hover:text-white hover:bg-nuvika-800/60">
-        <i class="ph-bold ph-books text-lg text-indigo-400"></i>
-        <span>Hub de Recursos & Guías</span>
+      <button onclick="switchTab('library')" id="nav-library" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-books text-lg text-indigo-400"></i><span>Hub de Recursos & Guías</span>
       </button>
-
-      <button onclick="switchTab('scenarios')" id="nav-scenarios" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-slate-300 hover:text-white hover:bg-nuvika-800/60">
-        <i class="ph-bold ph-lightning text-lg text-rose-400"></i>
-        <span>Casos Difíciles & Alumnos</span>
+      <button onclick="switchTab('scenarios')" id="nav-scenarios" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-lightning text-lg text-rose-400"></i><span>Casos Difíciles & Alumnos</span>
       </button>
-
-      <button onclick="switchTab('cohort')" id="nav-cohort" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-slate-300 hover:text-white hover:bg-nuvika-800/60">
-        <i class="ph-bold ph-users-three text-lg text-cyan-400"></i>
-        <span>Entrenadores & Cohortes</span>
+      <button onclick="switchTab('cohort')" id="nav-cohort" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 border border-transparent text-slate-300 hover:text-white hover:bg-nuvika-800/60">
+        <i class="ph-bold ph-users-three text-lg text-cyan-400"></i><span>Entrenadores & Cohortes</span>
       </button>
     </nav>
 
-    <!-- Quick Access Links & Telegram Reminder -->
-    <div class="p-4 border-t border-slate-800/80 bg-nuvika-900/60">
+    <div class="p-4 border-t border-slate-800/80 bg-nuvika-900/60 space-y-3">
       <div class="flex items-center gap-3 p-3 rounded-xl bg-nuvika-850 border border-slate-700/60">
-        <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
-          <i class="ph-bold ph-paper-plane-tilt text-lg"></i>
-        </div>
+        <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0"><i class="ph-bold ph-paper-plane-tilt text-lg"></i></div>
         <div class="overflow-hidden">
           <p class="text-[11px] font-bold text-white truncate">Grupo de Telegram</p>
-          <a href="https://t.me/nuvika_support" target="_blank" class="text-[10px] text-sky-400 hover:underline flex items-center gap-1">
-            Canal de Cohorte <i class="ph ph-arrow-up-right"></i>
-          </a>
+          <a href="https://t.me/nuvika_support" target="_blank" rel="noopener" class="text-[10px] text-sky-400 hover:underline flex items-center gap-1">Canal de Cohorte <i class="ph ph-arrow-up-right"></i></a>
         </div>
       </div>
-      <div class="mt-3 text-[11px] text-slate-500 text-center">
-        Nuvika Education &copy; 2026 Supply LATAM
-      </div>
+      <button onclick="logout()" class="w-full py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-rose-300 hover:bg-rose-500/10 border border-slate-800 hover:border-rose-500/30 flex items-center justify-center gap-2 transition">
+        <i class="ph-bold ph-sign-out"></i> Cerrar sesión
+      </button>
+      <div class="text-[11px] text-slate-500 text-center">Nuvika Education &copy; 2026 Supply LATAM</div>
     </div>
   </aside>
 
-  <!-- Overlay for mobile drawer -->
   <div id="drawerOverlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden"></div>
 
-  <!-- Main Content Area -->
-  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-gradient-to-b from-[#091527] to-[#070e1a]">
-    
-    <!-- Top Action Bar -->
-    <header class="border-b border-slate-800/80 px-6 py-4 bg-nuvika-900/40 backdrop-blur-md flex flex-wrap items-center justify-between gap-4 sticky top-0 z-20">
-      <div>
-        <h1 id="pageTitle" class="text-xl font-bold text-white flex items-center gap-2">
+  <main class="flex-1 flex flex-col min-h-screen md:h-screen md:overflow-y-auto bg-gradient-to-b from-[#091527] to-[#070e1a] min-w-0">
+
+    <header class="border-b border-slate-800/80 px-6 py-4 bg-nuvika-900/40 backdrop-blur-md flex flex-wrap items-center justify-between gap-4 md:sticky md:top-0 z-20">
+      <div class="min-w-0">
+        <h1 id="pageTitle" class="text-xl font-bold text-white flex flex-wrap items-center gap-2">
           <span>Mi Ruta de Certificación Nuvika</span>
           <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-medium">Edición Tutores 2026</span>
         </h1>
         <p id="pageSubtitle" class="text-xs text-slate-400 mt-0.5">Sigue los 5 pasos obligatorios para completar tu contratación y activarte en clases remuneradas.</p>
       </div>
 
-      <div class="flex items-center gap-3">
-        <!-- Quick Materia Filter -->
+      <div class="flex flex-wrap items-center gap-3">
         <div class="flex items-center bg-nuvika-850 border border-slate-700/70 rounded-xl px-2.5 py-1.5 text-xs text-slate-300">
           <i class="ph ph-chalkboard-teacher mr-2 text-cyan-400"></i>
-          <span class="mr-2 text-slate-400">Track:</span>
+          <span class="mr-2 text-slate-400">Recursos de:</span>
           <select id="userTrackSelector" onchange="changeTrack(this.value)" class="bg-transparent text-white font-semibold outline-none cursor-pointer">
             <option value="SCRATCH" class="bg-nuvika-900 text-white">Scratch Kids</option>
             <option value="ROBLOX" class="bg-nuvika-900 text-white">Roblox Studio</option>
@@ -199,345 +228,142 @@
             <option value="MATH" class="bg-nuvika-900 text-white">Matemáticas Prácticas</option>
           </select>
         </div>
-
+        <button onclick="refreshTutor()" id="refreshBtn" title="Actualizar desde la base de datos" class="px-3 py-1.5 rounded-xl bg-nuvika-850 hover:bg-nuvika-800 border border-slate-700/70 text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+          <i id="refreshIcon" class="ph-bold ph-arrows-clockwise"></i> Actualizar
+        </button>
         <button onclick="switchTab('simulator')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-500/25 flex items-center gap-1.5 transition">
           <i class="ph-bold ph-play"></i> Iniciar Práctica
         </button>
       </div>
     </header>
 
-    <!-- Content Containers -->
+    <!-- Aviso de modo demo -->
+    <div id="demoBanner" class="hidden mx-6 mt-4 text-[11px] text-amber-200 bg-amber-500/10 border border-amber-500/30 rounded-xl px-3.5 py-2 flex items-center gap-2">
+      <i class="ph-bold ph-flask text-amber-300 text-sm"></i> Estás viendo <strong>datos de ejemplo</strong>. Conecta tu Google Sheet pegando la URL de Apps Script en el código.
+    </div>
+
     <div class="p-6 max-w-7xl w-full mx-auto space-y-6">
 
       <!-- ============================================== -->
       <!-- SECTION 1: DASHBOARD / FUNNEL DE CERTIFICACIÓN -->
       <!-- ============================================== -->
       <section id="section-dashboard" class="space-y-6">
-        
-        <!-- Welcome Hero Banner -->
+
+        <!-- Hero personalizado -->
         <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-nuvika-800 via-nuvika-700 to-nuvika-900 border border-cyan-500/30 p-6 md:p-8 shadow-xl">
-          <div class="absolute -right-8 -bottom-10 opacity-10 text-cyan-400 pointer-events-none">
-            <i class="ph ph-code text-[220px]"></i>
-          </div>
-          <div class="max-w-3xl relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-xs font-semibold mb-3 border border-cyan-400/20">
-              <i class="ph-bold ph-sparkle text-sm"></i> Bienvenido a tu proceso de onboarding tutor
+          <div class="absolute -right-8 -bottom-10 opacity-10 text-cyan-400 pointer-events-none"><i class="ph ph-code text-[220px]"></i></div>
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between">
+            <div class="max-w-2xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 text-xs font-semibold mb-3 border border-cyan-400/20">
+                <i class="ph-bold ph-sparkle text-sm"></i> <span id="heroKicker">Tu proceso de onboarding tutor</span>
+              </div>
+              <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                ¡Hola, <span id="heroName" class="text-cyan-400">tutor</span>! <span id="heroHeadline">Este es tu avance en Nuvika.</span>
+              </h2>
+              <p id="heroText" class="text-slate-300 text-sm mt-2 leading-relaxed">
+                En Nuvika no solo evaluamos tus conocimientos técnicos; evaluamos tu capacidad de hacer que un niño o adolescente de 8 a 15 años se divierta, comprenda el concepto y construya un proyecto real en cada clase.
+              </p>
+              <div id="heroChips" class="mt-5 flex flex-wrap gap-3 items-center"></div>
             </div>
-            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-              Aprende la metodología Nuvika y aprueba tu <span class="text-cyan-400 underline decoration-cyan-400/40">Pre-Test en vivo</span>.
-            </h2>
-            <p class="text-slate-300 text-sm mt-2 leading-relaxed">
-              En Nuvika no solo evaluamos tus conocimientos técnicos de código o matemáticas; evaluamos tu capacidad de hacer que un niño o adolescente de 8 a 15 años se divierta, comprenda el concepto y construya un proyecto real en cada clase.
-            </p>
 
-            <div class="mt-6 flex flex-wrap gap-4 items-center">
-              <div class="flex items-center gap-2 text-xs bg-nuvika-900/60 backdrop-blur px-3 py-2 rounded-lg border border-slate-700">
-                <i class="ph-fill ph-check-circle text-emerald-400 text-base"></i>
-                <span class="text-slate-300">1. Encuesta & Grupal: <strong class="text-white">Completado</strong></span>
+            <!-- Anillo de progreso -->
+            <div class="shrink-0 flex items-center gap-4 bg-nuvika-900/50 backdrop-blur rounded-2xl border border-slate-700/60 p-4">
+              <div class="relative w-24 h-24">
+                <svg viewBox="0 0 100 100" class="w-24 h-24 -rotate-90">
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="#1e293b" stroke-width="10"/>
+                  <circle id="progressRing" cx="50" cy="50" r="42" fill="none" stroke="url(#ringGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="263.9" stroke-dashoffset="263.9" style="transition: stroke-dashoffset .9s ease"/>
+                  <defs><linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                  <span id="progressPct" class="text-xl font-extrabold text-white font-mono">0%</span>
+                  <span class="text-[10px] text-slate-400">completado</span>
+                </div>
               </div>
-              <div class="flex items-center gap-2 text-xs bg-nuvika-900/60 backdrop-blur px-3 py-2 rounded-lg border border-slate-700">
-                <i class="ph-fill ph-check-circle text-emerald-400 text-base"></i>
-                <span class="text-slate-300">2. Webinar de Políticas: <strong class="text-white">Asistido</strong></span>
-              </div>
-              <div class="flex items-center gap-2 text-xs bg-cyan-950/80 backdrop-blur px-3 py-2 rounded-lg border border-cyan-500/40 ring-1 ring-cyan-400/20">
-                <i class="ph-bold ph-spinner text-cyan-400 text-base animate-spin"></i>
-                <span class="text-white">3. Video Clase (15 min): <strong class="text-cyan-300">En Revisión</strong></span>
+              <div class="text-xs">
+                <p class="text-slate-400">Paso actual</p>
+                <p id="currentStepLabel" class="text-white font-bold text-sm mt-0.5">—</p>
+                <p class="text-slate-400 mt-2">Fecha examen</p>
+                <p id="lastUpdate" class="text-cyan-300 font-mono text-[11px] mt-0.5">—</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 5-Step Process Tracker Interactive Bar -->
+        <!-- Tracker de 5 pasos (dinámico) -->
         <div class="bg-nuvika-900/90 rounded-2xl border border-slate-800 p-6 shadow-md">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-6 flex items-center justify-between">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-6 flex flex-wrap gap-2 items-center justify-between">
             <span>Progreso del Funnel de Contratación</span>
-            <span class="text-cyan-400 font-mono text-xs">Fase 3 de 5 (60% completado)</span>
+            <span id="funnelSummary" class="text-cyan-400 font-mono text-xs">—</span>
           </h3>
+          <div id="funnelSteps" class="grid grid-cols-1 md:grid-cols-5 gap-3"></div>
+        </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-            <!-- Step 1 -->
-            <div class="p-4 rounded-xl bg-nuvika-850/80 border border-emerald-500/30 flex flex-col justify-between relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-12 h-12 bg-emerald-500/10 rounded-bl-full flex items-start justify-end p-2 text-emerald-400">
-                <i class="ph-bold ph-check text-base"></i>
-              </div>
-              <div>
-                <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">Paso 1</span>
-                <h4 class="text-sm font-bold text-white mt-1">Contacto & Encuesta</h4>
-                <p class="text-xs text-slate-400 mt-1">Entrevista grupal y recepción de datos iniciales.</p>
-              </div>
-              <div class="mt-4 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
-                <span class="text-emerald-400 font-medium">Aprobado</span>
-                <span class="text-slate-400">Ignacio HR</span>
+        <!-- Ficha del tutor + feedback -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-nuvika-900 border border-slate-800">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-4 flex items-center gap-2"><i class="ph-bold ph-identification-card text-cyan-400 text-base"></i> Mi ficha</h3>
+            <dl id="tutorFicha" class="text-xs space-y-3"></dl>
+          </div>
+
+          <div class="lg:col-span-2 p-6 rounded-2xl bg-nuvika-900 border border-slate-800 flex flex-col">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-4 flex items-center gap-2"><i class="ph-bold ph-chat-teardrop-text text-amber-400 text-base"></i> Feedback de tu entrenador</h3>
+            <div class="flex items-start gap-3 flex-1">
+              <div id="feedbackAvatar" class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-300 font-extrabold flex items-center justify-center border border-cyan-500/30 shrink-0">?</div>
+              <div class="flex-1 p-4 rounded-2xl rounded-tl-sm bg-nuvika-850 border border-slate-800">
+                <p id="feedbackTrainer" class="text-[11px] font-bold text-cyan-300 mb-1">—</p>
+                <p id="resFeedback" class="text-sm text-slate-200 leading-relaxed">Sin observaciones registradas por el momento.</p>
               </div>
             </div>
-
-            <!-- Step 2 -->
-            <div class="p-4 rounded-xl bg-nuvika-850/80 border border-emerald-500/30 flex flex-col justify-between relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-12 h-12 bg-emerald-500/10 rounded-bl-full flex items-start justify-end p-2 text-emerald-400">
-                <i class="ph-bold ph-check text-base"></i>
-              </div>
-              <div>
-                <span class="text-[11px] font-mono text-emerald-400 font-bold uppercase">Paso 2</span>
-                <h4 class="text-sm font-bold text-white mt-1">Webinar Políticas</h4>
-                <p class="text-xs text-slate-400 mt-1">Reunión en Telegram con tu entrenador de cohorte.</p>
-              </div>
-              <div class="mt-4 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
-                <span class="text-emerald-400 font-medium">Asistencia OK</span>
-                <span class="text-slate-400">Caro / Marce</span>
-              </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="p-4 rounded-xl bg-cyan-950/40 border-2 border-cyan-400 flex flex-col justify-between relative overflow-hidden shadow-lg shadow-cyan-500/10">
-              <div class="absolute top-0 right-0 px-2 py-0.5 bg-cyan-500 text-nuvika-900 text-[10px] font-extrabold uppercase rounded-bl-lg">
-                Actual
-              </div>
-              <div>
-                <span class="text-[11px] font-mono text-cyan-300 font-bold uppercase">Paso 3</span>
-                <h4 class="text-sm font-bold text-white mt-1">Video Tarea (15 min)</h4>
-                <p class="text-xs text-slate-300 mt-1">Grabación de clase muestra simulada con la metodología.</p>
-              </div>
-              <div class="mt-4 pt-2 border-t border-cyan-800/60 flex items-center justify-between text-[11px]">
-                <button onclick="switchTab('rubric')" class="text-cyan-300 hover:text-white font-semibold underline">Ver rúbrica & tips</button>
-                <span class="px-1.5 py-0.5 rounded bg-cyan-400/20 text-cyan-300 font-mono">Enviado</span>
-              </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="p-4 rounded-xl bg-nuvika-850/40 border border-slate-800 flex flex-col justify-between opacity-80 hover:opacity-100 transition">
-              <div>
-                <span class="text-[11px] font-mono text-slate-400 font-bold uppercase">Paso 4</span>
-                <h4 class="text-sm font-bold text-white mt-1">Pre-Test (Roleplay)</h4>
-                <p class="text-xs text-slate-400 mt-1">Simulación en vivo: tú eres el profe, el entrenador es el alumno.</p>
-              </div>
-              <div class="mt-4 pt-2 border-t border-slate-800 flex items-center justify-between text-[11px]">
-                <button onclick="switchTab('simulator')" class="text-cyan-400 hover:underline font-semibold">Practicar en Lab &rarr;</button>
-                <span class="text-amber-400 font-mono">Próximo</span>
-              </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="p-4 rounded-xl bg-nuvika-850/30 border border-slate-800 flex flex-col justify-between opacity-60">
-              <div>
-                <span class="text-[11px] font-mono text-slate-500 font-bold uppercase">Paso 5</span>
-                <h4 class="text-sm font-bold text-slate-300 mt-1">Test Final & Onb</h4>
-                <p class="text-xs text-slate-500 mt-1">Firma de contrato, onboarding a Slack y asignación de alumnos.</p>
-              </div>
-              <div class="mt-4 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
-                <span class="text-slate-500">Pendiente de Fase 4</span>
-                <i class="ph ph-lock text-slate-500"></i>
-              </div>
+            <div id="nextStepBox" class="mt-4 p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-800/40 text-xs text-cyan-100 flex items-start gap-2.5">
+              <i class="ph-bold ph-signpost text-cyan-400 text-base shrink-0 mt-px"></i><span id="nextStepText">—</span>
             </div>
           </div>
         </div>
 
-<!-- MÓDULO DE LOGIN & PROGRESO DEL TUTOR -->
-<section id="tutor-portal" class="max-w-4xl mx-auto my-12 p-6 bg-white rounded-2xl shadow-xl border border-slate-200">
-  <div class="text-center mb-6">
-    <span class="text-xs uppercase tracking-widest text-blue-600 font-bold">Portal del Tutor</span>
-    <h2 class="text-2xl font-black text-slate-800">Consulta tu Progreso y Resultados</h2>
-    <p class="text-sm text-slate-500">Ingresa tu Nombre Completo o tu Usuario de Telegram para sincronizar con tu ficha</p>
-  </div>
-
-  <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-    <input type="text" id="tutorQuery" placeholder="Ej: Jose Felipe Cortes o @josecortes" 
-           class="px-4 py-2 border border-slate-300 rounded-lg text-sm w-full sm:w-80 focus:ring-2 focus:ring-blue-500 outline-none">
-    <button onclick="buscarProgresoTutor()" 
-            class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md">
-      Consultar Avance
-    </button>
-  </div>
-
-  <div id="loadingStatus" class="hidden text-center text-sm text-blue-600 font-medium py-4">Buscando datos en la base de Nuvika...</div>
-  <div id="errorStatus" class="hidden text-center text-sm text-rose-600 font-medium py-4"></div>
-
-  <!-- TARJETA DE PROGRESO INDIVIDUAL -->
-  <div id="tutorCard" class="hidden border border-slate-200 rounded-xl p-6 bg-slate-50">
-    <div class="flex flex-wrap justify-between items-center border-b border-slate-200 pb-4 mb-4">
-      <div>
-        <h3 id="resNombre" class="text-xl font-bold text-slate-800"></h3>
-        <p class="text-xs text-slate-500">Materia: <span id="resCurso" class="font-bold text-slate-700"></span> | Entrenador: <span id="resEntrenador" class="font-bold text-slate-700"></span></p>
-      </div>
-      <div id="badgeResultado" class="px-4 py-1.5 rounded-full text-xs font-black uppercase"></div>
-    </div>
-
-    <!-- Barra de Hitos -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center mb-6">
-      <div id="stepWebinar" class="p-3 bg-white rounded-lg border shadow-sm">
-        <p class="text-xs text-slate-400">Paso 1</p>
-        <p class="text-xs font-bold text-slate-700">Webinar Políticas</p>
-        <span class="text-lg" id="iconWebinar">⏳</span>
-      </div>
-      <div id="stepVideo" class="p-3 bg-white rounded-lg border shadow-sm">
-        <p class="text-xs text-slate-400">Paso 2</p>
-        <p class="text-xs font-bold text-slate-700">Video Clase</p>
-        <span class="text-lg" id="iconVideo">⏳</span>
-      </div>
-      <div id="stepPretest" class="p-3 bg-white rounded-lg border shadow-sm">
-        <p class="text-xs text-slate-400">Paso 3</p>
-        <p class="text-xs font-bold text-slate-700">Pre-Test Roleplay</p>
-        <span class="text-lg" id="iconPretest">⏳</span>
-      </div>
-      <div id="stepExamen" class="p-3 bg-white rounded-lg border shadow-sm">
-        <p class="text-xs text-slate-400">Paso 4</p>
-        <p class="text-xs font-bold text-slate-700">Test Final</p>
-        <span class="text-lg" id="iconExamen">⏳</span>
-      </div>
-    </div>
-
-    <!-- Comentarios y Feedback -->
-    <div class="bg-white p-4 rounded-lg border border-slate-200">
-      <p class="text-xs font-bold text-slate-500 uppercase tracking-wide">Observaciones / Feedback de tu Entrenador:</p>
-      <p id="resFeedback" class="text-sm text-slate-700 mt-1 italic">Sin observaciones registradas por el momento.</p>
-    </div>
-  </div>
-</section>
-
-<script>
-// REEMPLAZA ESTA URL CON LA QUE TE DIO APPS SCRIPT AL IMPLEMENTAR
-const APPS_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT_QUE_TERMINA_EN_EXEC";
-
-async function buscarProgresoTutor() {
-  const query = document.getElementById("tutorQuery").value.trim();
-  const loading = document.getElementById("loadingStatus");
-  const error = document.getElementById("errorStatus");
-  const card = document.getElementById("tutorCard");
-
-  if (!query) {
-    error.textContent = "Por favor ingresa tu nombre o usuario de Telegram.";
-    error.classList.remove("hidden");
-    return;
-  }
-
-  loading.classList.remove("hidden");
-  error.classList.add("hidden");
-  card.classList.add("hidden");
-
-  try {
-    const res = await fetch(`${APPS_SCRIPT_URL}?query=${encodeURIComponent(query)}`);
-    const data = await res.json();
-    loading.classList.add("hidden");
-
-    if (!data.found || data.data.length === 0) {
-      error.textContent = "No encontramos ningún registro con ese nombre/usuario. Revisa la ortografía o consulta con tu reclutador.";
-      error.classList.remove("hidden");
-      return;
-    }
-
-    const tutor = data.data[0];
-    document.getElementById("resNombre").textContent = tutor.nombre;
-    document.getElementById("resCurso").textContent = tutor.curso;
-    document.getElementById("resEntrenador").textContent = tutor.entrenador;
-    document.getElementById("resFeedback").textContent = tutor.comentarios || "Aún no se ha registrado feedback escrito.";
-
-    // Renderizar iconos
-    document.getElementById("iconWebinar").textContent = tutor.webinar ? "✅" : "⏳";
-    document.getElementById("iconVideo").textContent = tutor.video ? "✅" : "⏳";
-    document.getElementById("iconPretest").textContent = tutor.pretest ? "✅" : "⏳";
-    
-    // Estado Examen
-    const badge = document.getElementById("badgeResultado");
-    badge.textContent = tutor.resultadoExamen;
-    if (tutor.resultadoExamen.toLowerCase().indexOf("pass") !== -1 || tutor.resultadoExamen.toLowerCase().indexOf("aprob") !== -1) {
-      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-emerald-100 text-emerald-800 border border-emerald-300";
-      document.getElementById("iconExamen").textContent = "✅";
-    } else if (tutor.resultadoExamen.toLowerCase().indexOf("fail") !== -1 || tutor.resultadoExamen.toLowerCase().indexOf("reprob") !== -1) {
-      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-rose-100 text-rose-800 border border-rose-300";
-      document.getElementById("iconExamen").textContent = "❌";
-    } else {
-      badge.className = "px-4 py-1.5 rounded-full text-xs font-black uppercase bg-amber-100 text-amber-800 border border-amber-300";
-      document.getElementById("iconExamen").textContent = "⏳";
-    }
-
-    card.classList.remove("hidden");
-  } catch (err) {
-    loading.classList.add("hidden");
-    error.textContent = "Error al conectar con la base de datos de Google Sheets. Intenta nuevamente.";
-    error.classList.remove("hidden");
-  }
-}
-</script>
-        
         <!-- 3 Quick Access Action Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Card 1 -->
           <div class="rounded-2xl bg-nuvika-850/70 border border-slate-800 p-6 flex flex-col justify-between hover:border-cyan-500/40 transition group">
             <div>
-              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <i class="ph-bold ph-robot"></i>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="ph-bold ph-robot"></i></div>
               <h4 class="text-base font-bold text-white">Simulador de Roleplay Pre-Test</h4>
-              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Practica con perfiles de alumnos difíciles: niños tímidos, hiperactivos o desmotivados. Recibe feedback automático de tus intervenciones docentes.
-              </p>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">Practica con perfiles de alumnos difíciles: niños tímidos, hiperactivos o desmotivados. Recibe feedback automático de tus intervenciones docentes.</p>
             </div>
-            <button onclick="switchTab('simulator')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
-              <span>Abrir Simulador Interactivo</span> <i class="ph-bold ph-arrow-right"></i>
-            </button>
+            <button onclick="switchTab('simulator')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition"><span>Abrir Simulador Interactivo</span> <i class="ph-bold ph-arrow-right"></i></button>
           </div>
-
-          <!-- Card 2 -->
           <div class="rounded-2xl bg-nuvika-850/70 border border-slate-800 p-6 flex flex-col justify-between hover:border-cyan-500/40 transition group">
             <div>
-              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <i class="ph-bold ph-check-square-offset"></i>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="ph-bold ph-check-square-offset"></i></div>
               <h4 class="text-base font-bold text-white">Calculadora de Rúbrica</h4>
-              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Evalúa tu video y tu sesión con la misma rúbrica oficial de 100 puntos que usarán tus evaluadores (Caro, Marce y Juanjo).
-              </p>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">Evalúa tu video y tu sesión con la misma rúbrica oficial de 100 puntos que usarán tus evaluadores (Caro, Marce y Juanjo).</p>
             </div>
-            <button onclick="switchTab('rubric')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
-              <span>Calcular Mi Puntaje</span> <i class="ph-bold ph-arrow-right"></i>
-            </button>
+            <button onclick="switchTab('rubric')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition"><span>Calcular Mi Puntaje</span> <i class="ph-bold ph-arrow-right"></i></button>
           </div>
-
-          <!-- Card 3 -->
           <div class="rounded-2xl bg-nuvika-850/70 border border-slate-800 p-6 flex flex-col justify-between hover:border-cyan-500/40 transition group">
             <div>
-              <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <i class="ph-bold ph-folder-notch-open"></i>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="ph-bold ph-folder-notch-open"></i></div>
               <h4 class="text-base font-bold text-white">Guías & Templates de Clase</h4>
-              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Estructura de clase de 15 minutos en bloques: Hook inicial (3 min), Explicación Gamificada (5 min), Creación activa (5 min) y Cierre triunfal (2 min).
-              </p>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">Estructura de clase de 15 minutos en bloques: Hook inicial (3 min), Explicación Gamificada (5 min), Creación activa (5 min) y Cierre triunfal (2 min).</p>
             </div>
-            <button onclick="switchTab('library')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
-              <span>Explorar Recursos</span> <i class="ph-bold ph-arrow-right"></i>
-            </button>
+            <button onclick="switchTab('library')" class="mt-6 w-full py-2.5 rounded-xl bg-nuvika-800 hover:bg-nuvika-700 border border-slate-700 text-xs font-bold text-white flex items-center justify-center gap-2 transition"><span>Explorar Recursos</span> <i class="ph-bold ph-arrow-right"></i></button>
           </div>
         </div>
 
         <!-- Methodology Golden Rules Banner -->
         <div class="p-6 rounded-2xl bg-gradient-to-r from-nuvika-900 to-nuvika-850 border border-slate-800">
           <div class="flex items-center gap-3 mb-4">
-            <span class="w-7 h-7 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center text-sm">
-              <i class="ph-bold ph-star"></i>
-            </span>
+            <span class="w-7 h-7 rounded-lg bg-amber-400/20 text-amber-300 flex items-center justify-center text-sm"><i class="ph-bold ph-star"></i></span>
             <h4 class="text-sm font-bold text-white uppercase tracking-wider">Las 4 Reglas de Oro de Nuvika para pasar tu Examen</h4>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span class="text-cyan-400 font-bold block mb-1">1. El Alumno Comparte Pantalla</span>
-              <p class="text-slate-400">Nunca des una clase magistral mostrando tu pantalla. El alumno debe tener las manos en el teclado y codear él mismo.</p>
-            </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span class="text-cyan-400 font-bold block mb-1">2. Preguntas Socráticas</span>
-              <p class="text-slate-400">No digas la respuesta: pregunta "¿Qué bloque crees que detectará cuando toquemos el borde?". Estimula el pensamiento crítico.</p>
-            </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span class="text-cyan-400 font-bold block mb-1">3. Refuerzo Positivo Real</span>
-              <p class="text-slate-400">Festeja los pequeños logros específicos ("¡Excelente lógica condicional, Mateo!"), no solo digas "bien, bien".</p>
-            </div>
-            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span class="text-cyan-400 font-bold block mb-1">4. Control Estricto del Tiempo</span>
-              <p class="text-slate-400">En el pre-test tienes exactamente 15-20 minutos. Si te extiendes más de 3 minutos, pierdes puntos de gestión del aula.</p>
-            </div>
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800"><span class="text-cyan-400 font-bold block mb-1">1. El Alumno Comparte Pantalla</span><p class="text-slate-400">Nunca des una clase magistral mostrando tu pantalla. El alumno debe tener las manos en el teclado y codear él mismo.</p></div>
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800"><span class="text-cyan-400 font-bold block mb-1">2. Preguntas Socráticas</span><p class="text-slate-400">No digas la respuesta: pregunta "¿Qué bloque crees que detectará cuando toquemos el borde?". Estimula el pensamiento crítico.</p></div>
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800"><span class="text-cyan-400 font-bold block mb-1">3. Refuerzo Positivo Real</span><p class="text-slate-400">Festeja los pequeños logros específicos ("¡Excelente lógica condicional, Mateo!"), no solo digas "bien, bien".</p></div>
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800"><span class="text-cyan-400 font-bold block mb-1">4. Control Estricto del Tiempo</span><p class="text-slate-400">En el pre-test tienes exactamente 15-20 minutos. Si te extiendes más de 3 minutos, pierdes puntos de gestión del aula.</p></div>
           </div>
         </div>
 
       </section>
+
 
       <!-- ============================================== -->
       <!-- SECTION 2: SIMULADOR ROLEPLAY (PRE-TEST LAB)   -->
@@ -889,11 +715,11 @@ async function buscarProgresoTutor() {
 
           <!-- Materia Buttons Filter -->
           <div class="flex flex-wrap gap-2">
-            <button onclick="filterResources('ALL')" class="res-filter active px-3 py-1 rounded-xl text-xs font-bold bg-cyan-500 text-nuvika-900">Todos</button>
-            <button onclick="filterResources('SCRATCH')" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Scratch</button>
-            <button onclick="filterResources('ROBLOX')" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Roblox Studio</button>
-            <button onclick="filterResources('PYTHON')" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Python</button>
-            <button onclick="filterResources('MATH')" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Matemáticas</button>
+            <button onclick="filterResources('ALL')" data-cat="ALL" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-cyan-500 text-nuvika-900">Todos</button>
+            <button onclick="filterResources('SCRATCH')" data-cat="SCRATCH" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Scratch</button>
+            <button onclick="filterResources('ROBLOX')" data-cat="ROBLOX" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Roblox Studio</button>
+            <button onclick="filterResources('PYTHON')" data-cat="PYTHON" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Python</button>
+            <button onclick="filterResources('MATH')" data-cat="MATH" class="res-filter px-3 py-1 rounded-xl text-xs font-bold bg-nuvika-800 text-slate-300 hover:text-white">Matemáticas</button>
           </div>
         </div>
 
@@ -1270,6 +1096,7 @@ async function buscarProgresoTutor() {
 
     </div>
   </main>
+  </div><!-- /appShell -->
 
   <!-- ============================================== -->
   <!-- MODAL PARA VER RECURSO COMPLETO                -->
@@ -1293,9 +1120,321 @@ async function buscarProgresoTutor() {
     </div>
   </div>
 
-  <!-- JavaScript Logic & Interactive Simulator Engine -->
+  <!-- JavaScript Logic -->
   <script>
-    // Navigation Routing & Tabs
+    // =====================================================================
+    // CONFIGURACIÓN — pega aquí la URL de tu Apps Script (termina en /exec)
+    // Mientras tenga el texto "PEGA_AQUI", el portal funciona en MODO DEMO.
+    // =====================================================================
+    const APPS_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT_QUE_TERMINA_EN_EXEC";
+    const SESSION_KEY = 'nuvika_tutor_session_v2';
+    const SESSION_HOURS = 12; // tras este tiempo se pide ingresar de nuevo
+    const DEMO_MODE = !/^https:\/\/script\.google(usercontent)?\.com\//.test(APPS_SCRIPT_URL);
+
+    // Datos de ejemplo (iguales a la plantilla de Excel) para probar sin conexión
+    // Datos FICTICIOS con la misma forma que la hoja "TT Training Nuvika"
+    const DEMO_DATA = [
+      { nombre:'Laura Demo Pérez', telegram:'@laurademo', codigo:'', curso:'Scratch', entrenador:'Caro', grupo:'GRUPO 1', grupoFecha:'31-10-2026', fechaInicio:'31-10-2026', webinar:'Realizado', video:'Realizado', pretest:'', agendado:'', left:'', fechaExamen:'', examen:'', comentarios:'Buen video. Cuida el tiempo del cierre.', reclutador:'Juanita', fuente:'Telegram' },
+      { nombre:'Andrés Demo Ruiz', telegram:'@andresdemo', codigo:'4821', curso:'Roblox', entrenador:'Nico', grupo:'GRUPO 2', grupoFecha:'02-11-2026', fechaInicio:'02-11-2026', webinar:'Realizado', video:'Realizado', pretest:'Realizado', agendado:'Realizado', left:'', fechaExamen:'05-11-2026', examen:'', comentarios:'', reclutador:'Juanita', fuente:'LinkedIn' },
+      { nombre:'Sara Demo Gómez', telegram:'@sarademo', codigo:'', curso:'Python', entrenador:'Juanjo', grupo:'GRUPO 1', grupoFecha:'31-10-2026', fechaInicio:'31-10-2026', webinar:'Realizado', video:'Realizado', pretest:'Realizado', agendado:'Realizado', left:'', fechaExamen:'03-11-2026', examen:'92', comentarios:'¡Excelente clase! Bienvenida al equipo.', reclutador:'Juanita', fuente:'Telegram' },
+      { nombre:'Mario Demo Díaz', telegram:'@mariodemo', codigo:'', curso:'Matemáticas', entrenador:'Caro', grupo:'GRUPO 3', grupoFecha:'', fechaInicio:'01-11-2026', webinar:'Realizado', video:'Realizado', pretest:'Realizado', agendado:'Realizado', left:'', fechaExamen:'03-11-2026', examen:'65', comentarios:'No dejaste que el alumno compartiera pantalla. Puedes reagendar en 7 días.', reclutador:'Juanita', fuente:'Referido' }
+    ];
+
+    // Definición de los 5 pasos del funnel (clave = columna del Excel)
+    // Los 5 pasos = columnas de la hoja (Webinar Polít., Video Tarea, Pre-Test Rol, Agendado Final, Resultado Examen)
+    const PASS_SCORE = 80; // nota mínima en "Resultado Examen" para aprobar
+    const FUNNEL = [
+      { key:'webinar',  title:'Webinar Políticas',   desc:'Reunión en Telegram con tu entrenador de cohorte.', next:'Conéctate al webinar de políticas que se anuncia en el grupo de Telegram.' },
+      { key:'video',    title:'Video Tarea (15 min)', desc:'Grabación de clase muestra simulada con la metodología.', next:'Graba tu video de 15 minutos siguiendo el checklist y la rúbrica.', action:{ label:'Ver rúbrica & tips', tab:'rubric' } },
+      { key:'pretest',  title:'Pre-Test (Roleplay)', desc:'Simulación en vivo: tú eres el profe, el entrenador es el alumno.', next:'Reserva tu slot de Pre-Test y practica en el Roleplay Lab.', action:{ label:'Practicar en Lab →', tab:'simulator' } },
+      { key:'agendado', title:'Examen Agendado',     desc:'Tu examen final queda agendado con fecha y evaluador.', next:'Agenda tu examen final con tu entrenador o reclutador.', action:{ label:'Ver horarios →', tab:'cohort' } },
+      { key:'examen',   title:'Resultado Examen',    desc:`Nota final del examen (mínimo ${PASS_SCORE} para aprobar) y onboarding.`, next:'Presenta tu examen final en la fecha agendada.' }
+    ];
+
+    const TRAINER_COLORS = {
+      caro:   'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+      marce:  'bg-red-500/20 text-red-300 border-red-500/30',
+      juanjo: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+    };
+
+    let currentTutor = null;
+    let lastLogin = { query:'', code:'' };
+
+    // ---------- Utilidades ----------
+    const $ = id => document.getElementById(id);
+    function norm(v) {
+      return String(v ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .toLowerCase().replace(/^@/, '').replace(/\s+/g, ' ').trim();
+    }
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = String(text ?? '');
+      return div.innerHTML;
+    }
+    function storage(action, value) {
+      try {
+        if (action === 'get') return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+        if (action === 'set') localStorage.setItem(SESSION_KEY, JSON.stringify(value));
+        if (action === 'del') localStorage.removeItem(SESSION_KEY);
+      } catch (e) { return null; }
+    }
+
+    // Convierte el texto de la celda en un estado estándar
+    function statusOf(raw) {
+      const s = norm(raw);
+      if (!s || s === 'pendiente' || s === 'no' || s === 'false') return 'pending';
+      if (/reprob|fail|rechaz|no aprob|no paso/.test(s)) return 'fail';
+      if (/revis|enviad|agend|proceso|progreso/.test(s)) return 'review';
+      if (/^(realiz|hecho|aprob|pass|ok$|si$|true$|complet|asist|listo$|x$|✅)/.test(s)) return 'done';
+      return 'pending';
+    }
+    const STATUS_UI = {
+      done:    { label:'Aprobado',    icon:'ph-check',        text:'text-emerald-400', border:'border-emerald-500/30', chip:'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' },
+      review:  { label:'En revisión', icon:'ph-hourglass',    text:'text-amber-300',   border:'border-amber-500/40',   chip:'bg-amber-500/15 text-amber-300 border-amber-500/30' },
+      fail:    { label:'Reprobado',   icon:'ph-x',            text:'text-rose-400',    border:'border-rose-500/40',    chip:'bg-rose-500/15 text-rose-300 border-rose-500/30' },
+      pending: { label:'Pendiente',   icon:'ph-lock-simple',  text:'text-slate-500',   border:'border-slate-800',      chip:'bg-slate-800 text-slate-400 border-slate-700' }
+    };
+
+    function stepStatus(key, raw) {
+      if (key === 'examen') {
+        const n = parseFloat(String(raw || '').replace(',', '.'));
+        if (!isNaN(n)) return n >= PASS_SCORE ? 'done' : 'fail';
+      }
+      return statusOf(raw);
+    }
+    function isLeft(raw) { return /^(si|left|retir|abandon|desert|sali|baja)/.test(norm(raw)); }
+
+    function trackFromCourse(curso) {
+      const c = norm(curso);
+      if (c.includes('roblox') || c.includes('lua')) return 'ROBLOX';
+      if (c.includes('python')) return 'PYTHON';
+      if (c.includes('mat')) return 'MATH';
+      return 'SCRATCH';
+    }
+
+    // ---------- Acceso a datos ----------
+    async function fetchTutor(query, code) {
+      if (DEMO_MODE) {
+        await new Promise(r => setTimeout(r, 450));
+        const q = norm(query);
+        const t = DEMO_DATA.find(r => norm(r.nombre) === q || norm(r.telegram) === q);
+        if (!t) return { ok:true, found:false };
+        if (t.codigo) {
+          if (!code) return { ok:true, found:true, needsCode:true };
+          if (code !== t.codigo) return { ok:true, found:true, needsCode:true, wrongCode:true };
+        }
+        const { codigo, ...safe } = t;
+        return { ok:true, found:true, tutor:safe };
+      }
+      const url = `${APPS_SCRIPT_URL}?query=${encodeURIComponent(query)}${code ? `&code=${encodeURIComponent(code)}` : ''}&t=${Date.now()}`;
+      const res = await fetch(url, { redirect:'follow' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }
+
+    // ---------- Login ----------
+    function showLoginError(msg) {
+      $('loginErrorText').textContent = msg;
+      $('loginError').classList.remove('hidden');
+      const card = $('loginCard');
+      card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    }
+    function setLoginLoading(on) {
+      $('loginBtn').disabled = on;
+      $('loginBtnText').textContent = on ? 'Buscando tu ficha...' : 'Entrar al portal';
+      $('loginBtnIcon').className = on ? 'ph-bold ph-spinner animate-spin' : 'ph-bold ph-arrow-right';
+    }
+
+    $('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = $('loginQuery').value.trim();
+      const code = $('loginCode').value.trim();
+      $('loginError').classList.add('hidden');
+
+      if (norm(query).length < 3) return showLoginError('Escribe tu nombre completo o tu usuario de Telegram (mínimo 3 caracteres).');
+
+      setLoginLoading(true);
+      try {
+        const data = await fetchTutor(query, code);
+        if (!data.ok) {
+          const msgs = { SHEET_NOT_FOUND:'No se encontró la pestaña "TT Training Nuvika" en el Google Sheet.', BAD_HEADERS:'Los títulos de la hoja no coinciden con la plantilla.' };
+          return showLoginError(msgs[data.error] || 'Hubo un problema en el servidor. Intenta de nuevo en unos minutos.');
+        }
+        if (!data.found) return showLoginError('No encontramos ese nombre o usuario. Escríbelo exactamente como lo registraste (sin importar mayúsculas o tildes).');
+        if (data.needsCode) {
+          $('codeField').classList.remove('hidden');
+          $('loginCode').focus();
+          if (data.wrongCode) showLoginError('El código de acceso no es correcto.');
+          return;
+        }
+        lastLogin = { query, code };
+        storage('set', { query, code, ts: Date.now() });
+        enterApp(data.tutor);
+      } catch (err) {
+        console.error(err);
+        showLoginError('No pudimos conectar con la base de datos. Revisa tu conexión e intenta de nuevo.');
+      } finally {
+        setLoginLoading(false);
+      }
+    });
+
+    function enterApp(tutor) {
+      currentTutor = tutor;
+      renderTutor(tutor);
+      $('loginScreen').classList.add('hidden');
+      $('appShell').classList.remove('hidden');
+      switchTab('dashboard');
+    }
+
+    function logout() {
+      storage('del');
+      currentTutor = null;
+      $('appShell').classList.add('hidden');
+      $('loginScreen').classList.remove('hidden');
+      $('loginQuery').value = ''; $('loginCode').value = '';
+      $('codeField').classList.add('hidden');
+      $('loginError').classList.add('hidden');
+      $('loginQuery').focus();
+    }
+
+    async function refreshTutor() {
+      if (!lastLogin.query) return;
+      const icon = $('refreshIcon');
+      icon.classList.add('animate-spin');
+      try {
+        const data = await fetchTutor(lastLogin.query, lastLogin.code);
+        if (data.ok && data.found && data.tutor) renderTutor(data.tutor);
+        else if (data.ok && (!data.found || data.needsCode)) logout();
+      } catch (e) { console.error(e); }
+      finally { icon.classList.remove('animate-spin'); }
+    }
+
+    // ---------- Render del tutor ----------
+    function renderTutor(t) {
+      currentTutor = t;
+      const statuses = FUNNEL.map(s => stepStatus(s.key, t[s.key]));
+      const doneCount = statuses.filter(s => s === 'done').length;
+      const pct = Math.round(doneCount / FUNNEL.length * 100);
+      let currentIdx = statuses.findIndex(s => s !== 'done');
+      const allDone = currentIdx === -1;
+      if (allDone) currentIdx = FUNNEL.length - 1;
+      const currentStatus = statuses[currentIdx];
+      const firstName = (t.nombre || '').split(' ')[0] || 'tutor';
+      const track = trackFromCourse(t.curso);
+
+      // Sidebar
+      $('sidebarTutorName').textContent = t.nombre || '—';
+      $('sidebarTutorTrack').textContent = t.curso || '—';
+      $('sidebarCohort').textContent = t.grupo ? t.grupo.replace(/grupo/i, 'Grupo') : (t.entrenador ? `Cohorte ${t.entrenador}` : '—');
+      const left = isLeft(t.left);
+      $('sidebarPhase').textContent = left ? 'Inactivo' : allDone ? 'Aprobado' : (currentStatus === 'fail' ? 'Reintento' : `Fase ${currentIdx + 1}/5`);
+      $('sidebarProgressBar').style.width = pct + '%';
+
+      // Hero
+      $('heroName').textContent = firstName;
+      $('progressPct').textContent = pct + '%';
+      $('progressRing').style.strokeDashoffset = 263.9 * (1 - pct / 100);
+      $('currentStepLabel').textContent = allDone ? '¡Proceso completo!' : `${currentIdx + 1}. ${FUNNEL[currentIdx].title}`;
+      $('lastUpdate').textContent = t.fechaExamen || 'Por agendar';
+      $('funnelSummary').textContent = allDone ? '5 de 5 · 100% completado' : `Fase ${currentIdx + 1} de 5 (${pct}% completado)`;
+
+      if (left) {
+        $('heroKicker').textContent = 'Proceso pausado';
+        $('heroHeadline').textContent = 'Tu entrenamiento figura como inactivo.';
+        $('heroText').textContent = 'Si quieres retomar el proceso, escribe a tu reclutador o al grupo de Telegram.';
+      } else if (allDone) {
+        $('heroKicker').textContent = '¡Felicitaciones!';
+        $('heroHeadline').textContent = 'Completaste tu certificación Nuvika.';
+        $('heroText').textContent = 'Ya puedes activarte en clases remuneradas. Revisa tu correo y el grupo de Telegram para el onboarding final.';
+      } else if (currentStatus === 'fail') {
+        $('heroKicker').textContent = 'Tienes una nueva oportunidad';
+        $('heroHeadline').textContent = 'Vamos por el segundo intento.';
+        $('heroText').textContent = 'Lee el feedback de tu entrenador, practica en el Roleplay Lab y usa la rúbrica antes de reagendar.';
+      } else {
+        $('heroKicker').textContent = 'Tu proceso de onboarding tutor';
+        $('heroHeadline').textContent = 'Este es tu avance en Nuvika.';
+        $('heroText').textContent = 'En Nuvika evaluamos tu capacidad de hacer que un niño o adolescente de 8 a 15 años se divierta, comprenda el concepto y construya un proyecto real en cada clase.';
+      }
+
+      $('heroChips').innerHTML = FUNNEL.slice(0, Math.min(currentIdx + 1, 5)).map((s, i) => {
+        const st = statuses[i], ui = STATUS_UI[st];
+        return `<div class="flex items-center gap-2 text-xs bg-nuvika-900/60 backdrop-blur px-3 py-2 rounded-lg border ${i === currentIdx && !allDone ? 'border-cyan-500/40' : 'border-slate-700'}">
+          <i class="ph-bold ${ui.icon} ${ui.text} text-sm"></i>
+          <span class="text-slate-300">${i + 1}. ${escapeHtml(s.title)}: <strong class="text-white">${ui.label}</strong></span></div>`;
+      }).join('');
+
+      // Funnel
+      $('funnelSteps').innerHTML = FUNNEL.map((s, i) => {
+        const st = statuses[i], ui = STATUS_UI[st];
+        const isCurrent = i === currentIdx && !allDone;
+        const locked = st === 'pending' && !isCurrent;
+        const cardCls = isCurrent
+          ? `bg-cyan-950/40 border-2 ${st === 'fail' ? 'border-rose-400' : 'border-cyan-400'} shadow-lg shadow-cyan-500/10`
+          : `bg-nuvika-850/${locked ? '30' : '80'} border ${ui.border} ${locked ? 'opacity-60' : ''}`;
+        const corner = isCurrent
+          ? `<div class="absolute top-0 right-0 px-2 py-0.5 ${st === 'fail' ? 'bg-rose-500 text-white' : 'bg-cyan-500 text-nuvika-900'} text-[10px] font-extrabold uppercase rounded-bl-lg">Actual</div>`
+          : `<div class="absolute top-0 right-0 w-12 h-12 ${st === 'done' ? 'bg-emerald-500/10' : st === 'fail' ? 'bg-rose-500/10' : 'bg-slate-800/40'} rounded-bl-full flex items-start justify-end p-2 ${ui.text}"><i class="ph-bold ${ui.icon} text-base"></i></div>`;
+        const action = s.action && !locked
+          ? `<button onclick="switchTab('${s.action.tab}')" class="text-cyan-300 hover:text-white font-semibold underline">${s.action.label}</button>`
+          : `<span class="${ui.text} font-medium">${locked ? 'Bloqueado' : ui.label}</span>`;
+        return `<div class="p-4 rounded-xl ${cardCls} flex flex-col justify-between relative overflow-hidden transition">
+          ${corner}
+          <div>
+            <span class="text-[11px] font-mono ${isCurrent ? 'text-cyan-300' : ui.text} font-bold uppercase">Paso ${i + 1}</span>
+            <h4 class="text-sm font-bold text-white mt-1">${s.title}</h4>
+            <p class="text-xs text-slate-400 mt-1">${s.desc}</p>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-700/60 flex items-center justify-between gap-2 text-[11px]">
+            ${action}
+            <span class="px-1.5 py-0.5 rounded border font-mono ${ui.chip}">${escapeHtml(s.key === 'examen' && t.examen && !isNaN(parseFloat(t.examen)) ? t.examen + ' / 100' : (t[s.key] || 'Pendiente'))}</span>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Ficha
+      const score = String(t.examen || '').trim();
+      const scoreNum = parseFloat(score);
+      const scoreHtml = score
+        ? `<span class="font-mono font-bold ${scoreNum >= PASS_SCORE ? 'text-emerald-400' : 'text-amber-300'}">${escapeHtml(score)} / 100</span>`
+        : '<span class="text-slate-500">Aún sin calificar</span>';
+      const rows = [
+        ['Nombre', escapeHtml(t.nombre)],
+        ['Telegram', t.telegram ? `<span class="font-mono text-sky-300">${escapeHtml(String(t.telegram).startsWith('@') ? t.telegram : '@' + t.telegram)}</span>` : '<span class="text-slate-500">—</span>'],
+        ['Curso', escapeHtml(t.curso || '—')],
+        ['Entrenador', escapeHtml(t.entrenador || '—')],
+        ['Grupo', escapeHtml([t.grupo, t.grupoFecha].filter(Boolean).join(' · ') || '—')],
+        ['Fecha de inicio', escapeHtml(t.fechaInicio || '—')],
+        ['Fecha examen', escapeHtml(t.fechaExamen || 'Por agendar')],
+        ['Resultado examen', scoreHtml],
+        ['Reclutador', escapeHtml(t.reclutador || '—')]
+      ];
+      $('tutorFicha').innerHTML = rows.map(([k, v]) =>
+        `<div class="flex items-center justify-between gap-3 pb-2.5 border-b border-slate-800/70 last:border-0"><dt class="text-slate-400">${k}</dt><dd class="text-white font-semibold text-right">${v}</dd></div>`).join('');
+
+      // Feedback
+      const trainer = String(t.entrenador || '').trim();
+      $('feedbackAvatar').textContent = trainer ? trainer[0].toUpperCase() : '?';
+      $('feedbackAvatar').className = `w-10 h-10 rounded-xl font-extrabold flex items-center justify-center border shrink-0 ${TRAINER_COLORS[norm(trainer)] || TRAINER_COLORS.caro}`;
+      $('feedbackTrainer').textContent = trainer ? `${trainer} · Entrenador(a)` : 'Tu entrenador';
+      $('resFeedback').textContent = t.comentarios || 'Aún no se ha registrado feedback escrito. Cuando tu entrenador lo escriba en tu ficha, aparecerá aquí.';
+      $('resFeedback').classList.toggle('italic', !t.comentarios);
+
+      $('nextStepText').innerHTML = left
+        ? '<strong>Siguiente paso:</strong> contacta a tu reclutador si quieres retomar el entrenamiento.'
+        : allDone
+        ? `<strong>Siguiente paso:</strong> firma de contrato y onboarding${t.reclutador ? ' con ' + escapeHtml(t.reclutador) : ''}. ¡Bienvenido(a) al equipo!`
+        : currentStatus === 'fail'
+          ? `<strong>Siguiente paso:</strong> repasa el feedback y reagenda tu <strong>${FUNNEL[currentIdx].title}</strong> con tu entrenador.`
+          : currentStatus === 'review'
+            ? `<strong>Siguiente paso:</strong> tu <strong>${FUNNEL[currentIdx].title}</strong> está en revisión. Mientras tanto, prepárate para el siguiente paso.`
+            : `<strong>Siguiente paso:</strong> ${FUNNEL[currentIdx].next}`;
+
+      // Track de recursos por defecto = curso del tutor
+      $('userTrackSelector').value = track;
+      filterResources(track);
+    }
+
+    // ---------- Navegación ----------
     const tabs = ['dashboard', 'simulator', 'rubric', 'library', 'scenarios', 'cohort'];
     const pageTitles = {
       dashboard: { title: 'Mi Ruta de Certificación Nuvika', sub: 'Sigue los 5 pasos obligatorios para completar tu contratación y activarte en clases remuneradas.' },
@@ -1305,66 +1444,58 @@ async function buscarProgresoTutor() {
       scenarios: { title: 'Banco de Casos Difíciles & Alumnos', sub: 'Manual de respuestas pedagógicas recomendadas ante situaciones complejas en el aula.' },
       cohort: { title: 'Entrenadores & Cohortes de Formación', sub: 'Conoce los perfiles de Caro, Marce y Juanjo, y los horarios disponibles para tu examen.' }
     };
+    const ACTIVE_NAV = ['text-cyan-400', 'bg-cyan-500/10', 'border-cyan-500/30'];
 
     function switchTab(tabId) {
       tabs.forEach(t => {
-        const sec = document.getElementById(`section-${t}`);
-        const nav = document.getElementById(`nav-${t}`);
-        if (sec) sec.classList.add('hidden');
-        if (nav) {
-          nav.classList.remove('text-cyan-400', 'bg-cyan-500/10', 'border', 'border-cyan-500/30');
-          nav.classList.add('text-slate-300');
-        }
+        $(`section-${t}`)?.classList.add('hidden');
+        const nav = $(`nav-${t}`);
+        if (nav) { nav.classList.remove(...ACTIVE_NAV); nav.classList.add('text-slate-300', 'border-transparent'); }
       });
-
-      const activeSec = document.getElementById(`section-${tabId}`);
-      const activeNav = document.getElementById(`nav-${tabId}`);
-      if (activeSec) activeSec.classList.remove('hidden');
-      if (activeNav) {
-        activeNav.classList.add('text-cyan-400', 'bg-cyan-500/10', 'border', 'border-cyan-500/30');
-        activeNav.classList.remove('text-slate-300');
-      }
-
+      $(`section-${tabId}`)?.classList.remove('hidden');
+      const activeNav = $(`nav-${tabId}`);
+      if (activeNav) { activeNav.classList.add(...ACTIVE_NAV); activeNav.classList.remove('text-slate-300', 'border-transparent'); }
       if (pageTitles[tabId]) {
-        document.getElementById('pageTitle').firstElementChild.textContent = pageTitles[tabId].title;
-        document.getElementById('pageSubtitle').textContent = pageTitles[tabId].sub;
+        $('pageTitle').firstElementChild.textContent = pageTitles[tabId].title;
+        $('pageSubtitle').textContent = pageTitles[tabId].sub;
       }
-
-      // Close mobile drawer if open
-      document.getElementById('sidebar').classList.add('-translate-x-full');
-      document.getElementById('drawerOverlay').classList.add('hidden');
+      $('sidebar').classList.add('-translate-x-full');
+      $('drawerOverlay').classList.add('hidden');
+      document.querySelector('main')?.scrollTo({ top: 0 });
+      window.scrollTo({ top: 0 });
     }
 
-    // Mobile Drawer Toggle
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('sidebar').classList.remove('-translate-x-full');
-      document.getElementById('drawerOverlay').classList.remove('hidden');
+    $('mobileMenuBtn').addEventListener('click', () => {
+      $('sidebar').classList.remove('-translate-x-full');
+      $('drawerOverlay').classList.remove('hidden');
+    });
+    $('drawerOverlay').addEventListener('click', () => {
+      $('sidebar').classList.add('-translate-x-full');
+      $('drawerOverlay').classList.add('hidden');
     });
 
-    document.getElementById('drawerOverlay').addEventListener('click', () => {
-      document.getElementById('sidebar').classList.add('-translate-x-full');
-      document.getElementById('drawerOverlay').classList.add('hidden');
-    });
+    // El selector de track solo cambia los recursos mostrados (ya no cambia el nombre del tutor)
+    function changeTrack(track) { filterResources(track); }
 
-    // Track selector handler
-    function changeTrack(track) {
-      const names = {
-        SCRATCH: 'Christian Camilo O.',
-        ROBLOX: 'Alejandra Arevalo',
-        PYTHON: 'Daniela Vargas',
-        MATH: 'Juan Diego Rojas'
-      };
-      const coaches = {
-        SCRATCH: 'Cohorte Caro',
-        ROBLOX: 'Cohorte Marce',
-        PYTHON: 'Cohorte Juanjo',
-        MATH: 'Cohorte Caro / Juanjo'
-      };
-
-      document.getElementById('sidebarTutorName').textContent = names[track] || 'Christian Camilo O.';
-      document.getElementById('sidebarTutorTrack').textContent = track;
-      filterResources(track);
+    // ---------- Filtro de recursos ----------
+    function filterResources(cat) {
+      document.querySelectorAll('.res-filter').forEach(btn => {
+        const on = btn.dataset.cat === cat;
+        btn.classList.toggle('bg-cyan-500', on);
+        btn.classList.toggle('text-nuvika-900', on);
+        btn.classList.toggle('bg-nuvika-800', !on);
+        btn.classList.toggle('text-slate-300', !on);
+      });
+      document.querySelectorAll('.resource-card').forEach(card => {
+        const c = card.dataset.category;
+        card.classList.toggle('hidden', !(cat === 'ALL' || c === cat || c === 'ALL'));
+      });
     }
+
+    // Cerrar modal con Escape o clic fuera
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeResourceModal(); });
+    $('resourceModal').addEventListener('click', e => { if (e.target.id === 'resourceModal') closeResourceModal(); });
+
 
     // ==========================================
     // SIMULADOR DE ROLEPLAY PRE-TEST (LÓGICA)
@@ -1656,28 +1787,6 @@ async function buscarProgresoTutor() {
     // ==========================================
     // FILTROS Y MODAL DE RECURSOS PEDAGÓGICOS
     // ==========================================
-    function filterResources(cat) {
-      const cards = document.querySelectorAll('.resource-card');
-      const filterBtns = document.querySelectorAll('.res-filter');
-
-      filterBtns.forEach(btn => {
-        btn.classList.remove('bg-cyan-500', 'text-nuvika-900', 'active');
-        btn.classList.add('bg-nuvika-800', 'text-slate-300');
-        if (btn.textContent.toUpperCase().includes(cat) || (cat === 'ALL' && btn.textContent === 'Todos')) {
-          btn.classList.add('bg-cyan-500', 'text-nuvika-900', 'active');
-          btn.classList.remove('bg-nuvika-800', 'text-slate-300');
-        }
-      });
-
-      cards.forEach(card => {
-        const itemCat = card.getAttribute('data-category');
-        if (cat === 'ALL' || itemCat === cat || itemCat === 'ALL') {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
 
     const resourceData = {
       'scratch-apple': {
@@ -1797,11 +1906,29 @@ while True:
       document.getElementById('resourceModal').classList.add('hidden');
     }
 
-    // Initialize Simulator on Window Load
-    window.onload = function() {
+
+    // ---------- Inicio ----------
+    window.addEventListener('load', async () => {
       loadStudentScenario('sofia');
       calculateRubricScore();
-    };
+      if (DEMO_MODE) { $('demoNotice').classList.remove('hidden'); $('demoBanner').classList.remove('hidden'); }
+
+      // Restaurar sesión guardada (si no ha expirado)
+      const saved = storage('get');
+      if (saved && saved.query && Date.now() - saved.ts < SESSION_HOURS * 3600e3) {
+        $('loginQuery').value = saved.query;
+        setLoginLoading(true);
+        try {
+          const data = await fetchTutor(saved.query, saved.code);
+          if (data.ok && data.found && data.tutor) { lastLogin = { query: saved.query, code: saved.code }; enterApp(data.tutor); }
+          else storage('del');
+        } catch (e) { console.error(e); }
+        finally { setLoginLoading(false); }
+      } else {
+        storage('del');
+        $('loginQuery').focus();
+      }
+    });
   </script>
 </body>
 </html>
