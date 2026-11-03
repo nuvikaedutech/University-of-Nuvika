@@ -11,7 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <script>
-    tailwind.config = {
+    // Diagnóstico: si algo falla, se muestra en pantalla en vez de quedar en blanco
+    window.addEventListener('error', function (ev) {
+      var box = document.getElementById('fatalError');
+      if (!box) { box = document.createElement('div'); box.id = 'fatalError';
+        box.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:99999;background:#7f1d1d;color:#fff;font:13px/1.4 monospace;padding:12px 14px;border-radius:10px;white-space:pre-wrap';
+        (document.body || document.documentElement).appendChild(box); }
+      box.textContent += '⚠ Error: ' + (ev.message || (ev.target && (ev.target.src || ev.target.href) ? 'no se pudo cargar ' + (ev.target.src || ev.target.href) : 'desconocido')) + '\n';
+    }, true);
+  </script>
+  <script>
+    if (window.tailwind) tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -29,7 +39,7 @@
         }
       }
     }
-  </>
+  </script>
 
   <style>
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -1126,7 +1136,7 @@
     // CONFIGURACIÓN — pega aquí la URL de tu Apps Script (termina en /exec)
     // Mientras tenga el texto "PEGA_AQUI", el portal funciona en MODO DEMO.
     // =====================================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz91nQfZ9at1E-LO8DFLGB50sS79Jk9qzeFLvpRzRmM7ceDC9x_rPwWmUFIol0jtq0RYQ/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn3zDxLZ2Lep0rfzsrQufkpkf0AbYFccFetadyNBNv7iQHtLc9fv-QHPyN0ZKBCZK3jw/exec";
     const SESSION_KEY = 'nuvika_tutor_session_v2';
     const SESSION_HOURS = 12; // tras este tiempo se pide ingresar de nuevo
     const DEMO_MODE = !/^https:\/\/script\.google(usercontent)?\.com\//.test(APPS_SCRIPT_URL);
@@ -1909,6 +1919,12 @@ while True:
 
     // ---------- Inicio ----------
     window.addEventListener('load', async () => {
+      if (!window.tailwind) {
+        const w = document.createElement('div');
+        w.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#b45309;color:#fff;font:14px sans-serif;padding:10px;text-align:center';
+        w.textContent = 'No cargaron los estilos (cdn.tailwindcss.com). Revisa tu conexión o si tu red/hosting bloquea ese sitio.';
+        document.body.appendChild(w);
+      }
       loadStudentScenario('sofia');
       calculateRubricScore();
       if (DEMO_MODE) { $('demoNotice').classList.remove('hidden'); $('demoBanner').classList.remove('hidden'); }
