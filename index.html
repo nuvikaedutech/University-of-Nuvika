@@ -14,13 +14,17 @@
 <body>
   <!--
     Versión para GitHub Pages: solo "envuelve" el portal que publica Apps Script.
-    1) Pega abajo la URL /exec de tu aplicación web (la nueva, del proyecto dentro de la hoja).
+    1) Pega abajo la URL /exec de tu aplicación web.
     2) Sube este archivo a tu repositorio con el nombre index.html.
+    El link personal del tutor (?t=...) se pasa automáticamente al portal.
   -->
   <script>
     var PORTAL_URL = "https://script.google.com/macros/s/AKfycbx99dNUZkCGF07_iyhs2YN6SrAz1vF4_NXbxbBGcW6g0sO4DsqMSWtYxZFIlUS0Vjp3HA/exec";
     if (/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(PORTAL_URL)) {
-      document.write('<iframe src="' + PORTAL_URL + '" title="Portal del Tutor" allow="clipboard-write"></iframe>');
+      // Toma solo el token del link personal (letras y números) y se lo pasa al portal
+      var t = (new URLSearchParams(location.search).get('t') || '').replace(/[^A-Za-z0-9]/g, '');
+      var src = PORTAL_URL + (t ? '?t=' + t : '');
+      document.write('<iframe src="' + src + '" title="Portal del Tutor" allow="microphone; autoplay; clipboard-write"></iframe>');
     } else {
       document.write('<div class="msg"><b>Falta configurar el portal.</b><br>Abre este archivo y pega la URL que termina en <code>/exec</code> en <code>PORTAL_URL</code>.</div>');
     }
