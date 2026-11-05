@@ -19,7 +19,7 @@
     El link personal del tutor (?t=...) se pasa automáticamente al portal.
   -->
   <script>
-    var PORTAL_URL = "https://script.google.com/macros/s/AKfycbx99dNUZkCGF07_iyhs2YN6SrAz1vF4_NXbxbBGcW6g0sO4DsqMSWtYxZFIlUS0Vjp3HA/exec";
+    var PORTAL_URL = "https://script.google.com/macros/s/AKfycbxT6BjPjuyDVFVyh2PwBJoYLGiVrJ-IaePXKunj7uHRugyaXYnPq5VeTDmxYR35WbniFA/exec";
     if (/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(PORTAL_URL)) {
       // Toma solo el token del link personal (letras y números) y se lo pasa al portal
       var t = (new URLSearchParams(location.search).get('t') || '').replace(/[^A-Za-z0-9]/g, '');
