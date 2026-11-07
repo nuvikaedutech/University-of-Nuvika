@@ -19,16 +19,17 @@
     El link personal se pasa automáticamente:
       ?t=...  → Portal del Tutor
       ?e=...  → Panel del Entrenador
+      ?r=...  → Panel del Reclutador
   -->
   <script>
-    var PORTAL_URL = "https://script.google.com/macros/s/AKfycbyIx1dQqHSL45ikb1w8nYyrfzUQLQre500pAUzt_crl5wlOqF7xRI_HR1Lz2CZmNIUG4w/exec";
+    var PORTAL_URL = "https://script.google.com/macros/s/AKfycbyD0mjoIPGmE2meTl-58p263LZhC7aXOX6Wq6o-hu3wiiJoSp_MEG2W8p8xmTWIvX_UXg/exec";
     if (/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(PORTAL_URL)) {
       // Toma solo el token del link (letras y números) y se lo pasa a Apps Script
       var q = new URLSearchParams(location.search);
       var limpio = function (v) { return (v || '').replace(/[^A-Za-z0-9]/g, ''); };
-      var e = limpio(q.get('e')), t = limpio(q.get('t'));
-      var src = PORTAL_URL + (e ? '?e=' + e : (t ? '?t=' + t : ''));
-      document.title = e ? 'Nuvika · Panel del Entrenador' : 'Nuvika · Portal del Tutor';
+      var e = limpio(q.get('e')), r = limpio(q.get('r')), t = limpio(q.get('t'));
+      var src = PORTAL_URL + (e ? '?e=' + e : r ? '?r=' + r : t ? '?t=' + t : '');
+      document.title = e ? 'Nuvika · Panel del Entrenador' : r ? 'Nuvika · Panel del Reclutador' : 'Nuvika · Portal del Tutor';
       document.write('<iframe src="' + src + '" title="' + document.title + '" allow="clipboard-write"></iframe>');
     } else {
       document.write('<div class="msg"><b>Falta configurar el portal.</b><br>Abre este archivo y pega la URL que termina en <code>/exec</code> en <code>PORTAL_URL</code>.</div>');
